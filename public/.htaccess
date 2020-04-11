@@ -5,9 +5,11 @@
 
     RewriteEngine On
 
-    RewriteCond %{HTTPS} off [OR]
-    RewriteCond %{HTTP_HOST} ^www\. [NC]
-    RewriteRule ^ https://mywalletaplication.herokuapp.com%{REQUEST_URI} [L,NE,R=301]
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+    RewriteCond %{HTTP_HOST} ^www.mywalletaplication.herokuapp.com$ [NC]
+    RewriteRule ^(.*)$ https://mywalletaplication.herokuapp.com/ [R=301,L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
